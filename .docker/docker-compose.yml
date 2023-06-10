@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  quarto:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "${COMPOSE_PROJECT_NAME}"
+    container_name: "${COMPOSE_PROJECT_NAME}"
+    ports:
+      - "${PORT_NUM_RSTUDIO}:8787"
+      - "${PORT_NUM_SHINY}:3838"
+    environment:
+      - ROOT=TRUE
+      - "PASSWORD=${PASSWORD}"
+      - DISABLE_AUTH=false
+      - ADD=shiny
+    volumes:
+      - ../:/home/rstudio/project
+      - ../.rstudio/rstudio-prefs.json:/home/rstudio/.config/rstudio/rstudio-prefs.json
+      - ../:/home/vscode/project
+      - ../share/shiny:/srv/shiny-server
+      - "${PATH_DATA}:/home/rstudio/project/data"
+      - "${PATH_DATA}:/home/vscode/project/data"
+    tty: true
+    stdin_open: true
+
+  jupyterlab:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "${COMPOSE_PROJECT_NAME}_jupyterlab"
+    container_name: "${COMPOSE_PROJECT_NAME}_jupyterlab"     
+    working_dir: /home/jupyterlab/project
+    tty: true
+    volumes:
+      - ../:/home/jupyterlab/project
+      - "${PATH_DATA}:/home/jupyterlab/project/data"
+    ports: 
+      - "${PORT_NUM_JUPYTERLAB}:8080"
+    environment:
+      - "JUPYTER_PASS=${PASSWORD}"
+    command: "jupyter-lab --ip 0.0.0.0 --port=8080 --allow-root --no-browser  --NotebookApp.password=${PASSWORD}"
+
+  streamlit:
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: "${COMPOSE_PROJECT_NAME}_streamlit"
+    container_name: "${COMPOSE_PROJECT_NAME}_streamlit"       
+    working_dir: /home/streamlit/project
+    tty: true
+    volumes: 
+      - ../:/home/streamlit/project
+      - "${PATH_DATA}:/home/streamlit/project/data"
+    ports: 
+      - "${PORT_NUM_STREAMLIT}:8501"
+    command: streamlit run ./share/streamlit/app.py

@@ -1,0 +1,54 @@
+---
+title: "Hello from Quarto"
+format:
+  html:
+    # theme: default
+    toc: true
+    toc-title: 目次
+    number-sections: false
+    self-contained: true
+    code-tools: true
+    code-fold: "show"
+    page-layout: full
+    toc-location: right
+    grid:
+      margin-width: 150px
+    mainfont: Noto Sans
+execute: 
+  echo: true     # コードを出力に含めるか
+  cache: false   # 実行結果のキャッシュを保持するか
+  prompt: false  # コードの先頭に">"を表示するか
+  tidy: false    # コードの整形を行うか
+  message: false # コードが出力するメッセージを含めるか
+  warning: false # コードが出力する警告を含めるか
+  error: false   # エラーメッセージを表示するか
+editor_options: 
+  chunk_output_type: console
+---
+
+## はじめに
+
+- Quartoのサンプル
+
+## 環境設定
+
+```{r, setup}
+# セットアップ
+source("/home/rstudio/project/script/setup.R")
+```
+
+```{r, show-setup}
+#| file: /home/rstudio/project/script/setup.R
+#| eval: false
+```
+
+## データ
+
+## 基礎集計/可視化
+
+## モデリング
+
+## アウトプット
+
+## おわりに
+

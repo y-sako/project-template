@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+project_cache/
+project_files/
+core
+.docker/.env
+app_cache/
+.luarc.json
+data/
+eda/
+model/
+.quarto
+._.DS_Store
+.DS_Store
+
